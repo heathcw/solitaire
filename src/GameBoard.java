@@ -56,7 +56,12 @@ public class GameBoard extends JPanel {
         }
 
         //drawPile
-        CardComponent deckTop = new CardComponent(gameDeck.deck.getLast(), -1, -1, this);
+        CardComponent deckTop;
+        if (!gameDeck.deck.isEmpty()) {
+            deckTop = new CardComponent(gameDeck.deck.getLast(), -1, -1, this);
+        } else {
+            deckTop = new CardComponent(null, -1, -1, this);
+        }
         deckTop.setBounds(25, 100, 70, 100);
         this.add(deckTop);
         if (!drawPile.isEmpty()) {
@@ -102,15 +107,15 @@ public class GameBoard extends JPanel {
                 solitaire.moveCardStack(selectedCard.stackNumber, selectedCard.index, clickedCard.stackNumber);
             }
             selectedCard = null;
-            drawPlayingField();
         } else if (selectedCard == clickedCard) {
             selectedCard = null; // Deselect if same card clicked again
         } else {
-            if (!solitaire.moveCardSuit(clickedCard.stackNumber, clickedCard.cardSuit())) {
+            if (!solitaire.moveCardSuit(clickedCard.stackNumber, clickedCard.cardSuit(), clickedCard.cardNumber())) {
                 selectedCard = clickedCard;
                 selectedCard.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
             }
         }
+        drawPlayingField();
         this.revalidate();
         this.repaint();
     }

@@ -164,12 +164,13 @@ public class game {
         return false;
     }
 
-    public boolean moveCardSuit(int origin, suit destination) {
+    public boolean moveCardSuit(int origin, suit destination, int checkCard) {
         card cardToMove;
         if (origin == -2) {
             cardToMove = drawPile.pop();
             return moveDrawPileSuit(cardToMove);
         }
+        if (checkCard != playingField.get(origin).getLast().cardValue) { return false; }
         cardToMove = playingField.get(origin).removeLast();
         card cardToCompare;
         switch (destination) {
