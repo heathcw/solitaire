@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 
 public class CardComponent extends JComponent {
     private final card cardComponent;
@@ -38,11 +36,11 @@ public class CardComponent extends JComponent {
         super.paintComponent(g);
 
         if (cardComponent == null) {
-            drawEmptyCard(g, 0, 0);
+            drawEmptyCard(g);
         } else if (!cardComponent.faceDown) {
             drawCardFront(g, 0, 0, cardComponent.cardSuit, cardComponent.cardValue);
         } else {
-            drawCardBack(g, 0, 0); // If you support face-down cards
+            drawCardBack(g); // If you support face-down cards
         }
     }
 
@@ -79,13 +77,13 @@ public class CardComponent extends JComponent {
         g.drawString(suitString, x + 30, y + 55);
     }
 
-    private void drawCardBack(Graphics g, int x, int y) {
+    private void drawCardBack(Graphics g) {
         int width = 70;
         int height = 100;
 
         // Draw background fill
         g.setColor(new Color(30, 60, 180)); // Blue shade
-        g.fillRoundRect(x + 1, y + 1, width - 1, height - 1, 10, 10);
+        g.fillRoundRect(1, 1, width - 1, height - 1, 10, 10);
 
         // Draw inner pattern (checkerboard)
         g.setColor(Color.WHITE);
@@ -93,20 +91,20 @@ public class CardComponent extends JComponent {
         for (int i = 0; i < width / boxSize; i++) {
             for (int j = 0; j < height / boxSize; j++) {
                 if ((i + j) % 2 == 0) {
-                    g.fillRect(x + i * boxSize, y + j * boxSize, boxSize, boxSize);
+                    g.fillRect(i * boxSize, j * boxSize, boxSize, boxSize);
                 }
             }
         }
 
         // Draw border
         g.setColor(Color.BLACK);
-        g.drawRoundRect(x, y, width, height, 10, 10);
+        g.drawRoundRect(0, 0, width, height, 10, 10);
     }
 
-    private void drawEmptyCard(Graphics g, int x, int y) {
+    private void drawEmptyCard(Graphics g) {
         int width = 70;
         int height = 100;
         g.setColor(Color.BLACK);
-        g.drawRoundRect(x, y, width, height, 10, 10);
+        g.drawRoundRect(0, 0, width, height, 10, 10);
     }
 }

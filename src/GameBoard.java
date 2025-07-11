@@ -106,8 +106,6 @@ public class GameBoard extends JPanel {
                 solitaire.moveCardStack(selectedCard.stackNumber, selectedCard.index, clickedCard.stackNumber);
             }
             selectedCard = null;
-        } else if (selectedCard == clickedCard) {
-            selectedCard = null; // Deselect if same card clicked again
         } else {
             if (clickedCard.nullCard()) {
                 solitaire.draw();

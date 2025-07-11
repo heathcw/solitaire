@@ -16,7 +16,7 @@ public class deck {
                 deck.add(newCard);
             }
         }
-        //Collections.shuffle(deck);
+        Collections.shuffle(deck);
     }
 
     public card drawCard() {
