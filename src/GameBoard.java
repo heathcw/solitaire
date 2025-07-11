@@ -101,21 +101,18 @@ public class GameBoard extends JPanel {
             else if (clickedCard.index != -2) {
                 solitaire.moveCardStack(selectedCard.stackNumber, selectedCard.index, clickedCard.stackNumber);
             }
+            selectedCard = null;
             drawPlayingField();
-        }
-
-        if (selectedCard == clickedCard) {
+        } else if (selectedCard == clickedCard) {
             selectedCard = null; // Deselect if same card clicked again
         } else {
-            if (clickedCard.cardNumber() == 1) {
-                solitaire.moveCardSuit(clickedCard.stackNumber, clickedCard.cardSuit());
-            } else {
+            if (!solitaire.moveCardSuit(clickedCard.stackNumber, clickedCard.cardSuit())) {
                 selectedCard = clickedCard;
                 selectedCard.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
             }
-            this.revalidate();
-            this.repaint();
         }
+        this.revalidate();
+        this.repaint();
     }
 
     public void handleCardClickFaceDown(CardComponent clickedCard) {

@@ -165,11 +165,17 @@ public class game {
     }
 
     public boolean moveCardSuit(int origin, suit destination) {
-        card cardToMove = playingField.get(origin).removeLast();
+        card cardToMove;
+        if (origin == -2) {
+            cardToMove = drawPile.pop();
+            return moveDrawPileSuit(cardToMove);
+        }
+        cardToMove = playingField.get(origin).removeLast();
         card cardToCompare;
         switch (destination) {
             case CLUBS:
                 if (clubStack.isEmpty() && cardToMove.cardSuit == suit.CLUBS) {
+                    if (cardToMove.cardValue != 1) { break; }
                     clubStack.push(cardToMove);
                     playingField.get(origin).getLast().flip();
                     return true;
@@ -186,6 +192,7 @@ public class game {
                 }
             case HEARTS:
                 if (heartStack.isEmpty() && cardToMove.cardSuit == suit.HEARTS) {
+                    if (cardToMove.cardValue != 1) { break; }
                     heartStack.push(cardToMove);
                     playingField.get(origin).getLast().flip();
                     return true;
@@ -202,6 +209,7 @@ public class game {
                 }
             case SPADES:
                 if (spadeStack.isEmpty() && cardToMove.cardSuit == suit.SPADES) {
+                    if (cardToMove.cardValue != 1) { break; }
                     spadeStack.push(cardToMove);
                     playingField.get(origin).getLast().flip();
                     return true;
@@ -218,6 +226,7 @@ public class game {
                 }
             case DIAMONDS:
                 if (diamondStack.isEmpty() && cardToMove.cardSuit == suit.DIAMONDS) {
+                    if (cardToMove.cardValue != 1) { break; }
                     diamondStack.push(cardToMove);
                     playingField.get(origin).getLast().flip();
                     return true;
@@ -237,6 +246,77 @@ public class game {
                 return false;
         }
         playingField.get(origin).add(cardToMove);
+        return false;
+    }
+
+    public boolean moveDrawPileSuit(card cardToMove) {
+        card cardToCompare;
+        switch (cardToMove.cardSuit) {
+            case CLUBS:
+                if (clubStack.isEmpty()) {
+                    if (cardToMove.cardValue != 1) { break; }
+                    clubStack.push(cardToMove);
+                    return true;
+                }
+                cardToCompare = clubStack.pop();
+                if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.CLUBS) {
+                    clubStack.push(cardToCompare);
+                    clubStack.push(cardToMove);
+                    return true;
+                } else {
+                    clubStack.push(cardToCompare);
+                    break;
+                }
+            case HEARTS:
+                if (heartStack.isEmpty()) {
+                    if (cardToMove.cardValue != 1) { break; }
+                    heartStack.push(cardToMove);
+                    return true;
+                }
+                cardToCompare = heartStack.pop();
+                if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.HEARTS) {
+                    heartStack.push(cardToCompare);
+                    heartStack.push(cardToMove);
+                    return true;
+                } else {
+                    heartStack.push(cardToCompare);
+                    break;
+                }
+            case SPADES:
+                if (spadeStack.isEmpty()) {
+                    if (cardToMove.cardValue != 1) { break; }
+                    spadeStack.push(cardToMove);
+                    return true;
+                }
+                cardToCompare = spadeStack.pop();
+                if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.SPADES) {
+                    spadeStack.push(cardToCompare);
+                    spadeStack.push(cardToMove);
+                    return true;
+                } else {
+                    spadeStack.push(cardToCompare);
+                    break;
+                }
+            case DIAMONDS:
+                if (diamondStack.isEmpty()) {
+                    if (cardToMove.cardValue != 1) { break; }
+                    diamondStack.push(cardToMove);
+                    return true;
+                }
+                cardToCompare = diamondStack.pop();
+                if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.DIAMONDS) {
+                    diamondStack.push(cardToCompare);
+                    diamondStack.push(cardToMove);
+                    return true;
+                } else {
+                    diamondStack.push(cardToCompare);
+                    break;
+                }
+            default:
+                drawPile.push(cardToMove);
+                return false;
+        }
+        drawPile.push(cardToMove);
         return false;
     }
 }
