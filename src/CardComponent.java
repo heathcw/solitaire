@@ -31,6 +31,7 @@ public class CardComponent extends JComponent {
 
     public int cardNumber() { return this.cardComponent.cardValue; }
     public suit cardSuit() { return this.cardComponent.cardSuit; }
+    public boolean nullCard() { return cardComponent == null; }
 
     @Override
     protected void paintComponent(Graphics g) {

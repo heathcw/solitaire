@@ -77,12 +77,13 @@ public class game {
         if (drawn == null) {
             while (!drawPile.isEmpty()) {
                 card backToDeck = drawPile.pop();
+                backToDeck.flip();
                 gameDeck.addCard(backToDeck);
             }
-            drawn = gameDeck.drawCard();
+        } else {
+            drawn.flip();
+            drawPile.push(drawn);
         }
-        drawn.flip();
-        drawPile.push(drawn);
     }
 
     public boolean moveCardDrawPile(int destination) {

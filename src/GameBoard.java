@@ -102,15 +102,16 @@ public class GameBoard extends JPanel {
             selectedCard.setBorder(null); // Deselect previous
             if (selectedCard.index == -2) {
                 solitaire.moveCardDrawPile(clickedCard.stackNumber);
-            }
-            else if (clickedCard.index != -2) {
+            } else if (clickedCard.index != -2) {
                 solitaire.moveCardStack(selectedCard.stackNumber, selectedCard.index, clickedCard.stackNumber);
             }
             selectedCard = null;
         } else if (selectedCard == clickedCard) {
             selectedCard = null; // Deselect if same card clicked again
         } else {
-            if (!solitaire.moveCardSuit(clickedCard.stackNumber, clickedCard.cardSuit(), clickedCard.cardNumber())) {
+            if (clickedCard.nullCard()) {
+                solitaire.draw();
+            } else if (!solitaire.moveCardSuit(clickedCard.stackNumber, clickedCard.cardSuit(), clickedCard.cardNumber())) {
                 selectedCard = clickedCard;
                 selectedCard.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
             }
