@@ -100,7 +100,7 @@ public class GameBoard extends JPanel {
     public void handleCardClick(CardComponent clickedCard) {
         if (selectedCard != null) {
             selectedCard.setBorder(null); // Deselect previous
-            if (selectedCard.index == -2) {
+            if (selectedCard.index == -2 && clickedCard.index != -2) {
                 solitaire.moveCardDrawPile(clickedCard.stackNumber);
             } else if (clickedCard.index != -2) {
                 solitaire.moveCardStack(selectedCard.stackNumber, selectedCard.index, clickedCard.stackNumber);
