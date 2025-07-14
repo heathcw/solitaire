@@ -6,6 +6,7 @@ public class CardComponent extends JComponent {
     private final card cardComponent;
     public int stackNumber;
     public int index;
+    public boolean highlighted = false;
 
     public CardComponent(card newCard, int stackNumber, int index, GameBoard board) {
         cardComponent = newCard;
@@ -30,6 +31,7 @@ public class CardComponent extends JComponent {
     public int cardNumber() { return this.cardComponent.cardValue; }
     public suit cardSuit() { return this.cardComponent.cardSuit; }
     public boolean nullCard() { return cardComponent == null; }
+    public void highlight() { this.highlighted = true; }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -39,6 +41,7 @@ public class CardComponent extends JComponent {
             drawEmptyCard(g);
         } else if (!cardComponent.faceDown) {
             drawCardFront(g, 0, 0, cardComponent.cardSuit, cardComponent.cardValue);
+            if (highlighted) { setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2)); }
         } else {
             drawCardBack(g); // If you support face-down cards
         }

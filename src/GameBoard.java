@@ -67,6 +67,9 @@ public class GameBoard extends JPanel {
         if (!drawPile.isEmpty()) {
             CardComponent drawTop = new CardComponent(drawPile.peek(), -2, -2, this);
             drawTop.setBounds(25, 225, 70, 100);
+            if (selectedCard != null && selectedCard.index == -2) {
+                drawTop.highlight();
+            }
             this.add(drawTop);
         }
 
@@ -88,6 +91,9 @@ public class GameBoard extends JPanel {
             for (card cardToDraw : stack) {
                 CardComponent cardComp = new CardComponent(cardToDraw, stackNumber, index, this);
                 cardComp.setBounds(x, y, 70, 100);
+                if (selectedCard != null && selectedCard.index == index && selectedCard.stackNumber == stackNumber) {
+                    cardComp.highlight();
+                }
                 this.add(cardComp);
                 this.setComponentZOrder(cardComp, 0);
                 y = y + 25;
@@ -112,7 +118,6 @@ public class GameBoard extends JPanel {
                 solitaire.draw();
             } else if (!solitaire.moveCardSuit(clickedCard.stackNumber, clickedCard.cardSuit(), clickedCard.cardNumber())) {
                 selectedCard = clickedCard;
-                selectedCard.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
             }
         }
         drawPlayingField();
@@ -122,6 +127,7 @@ public class GameBoard extends JPanel {
 
     public void handleCardClickFaceDown(CardComponent clickedCard) {
         if (clickedCard.index == -1) {
+            selectedCard = null;
             solitaire.draw();
             drawPlayingField();
             this.revalidate();
