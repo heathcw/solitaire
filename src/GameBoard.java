@@ -82,6 +82,7 @@ public class GameBoard extends JPanel {
                 CardComponent cardComp = new CardComponent(null, stackNumber, 0, this);
                 cardComp.setBounds(x, y, 70, 100);
                 this.add(cardComp);
+                stackNumber +=1;
                 continue;
             }
             for (card cardToDraw : stack) {
