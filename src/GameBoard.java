@@ -91,7 +91,7 @@ public class GameBoard extends JPanel {
             for (card cardToDraw : stack) {
                 CardComponent cardComp = new CardComponent(cardToDraw, stackNumber, index, this);
                 cardComp.setBounds(x, y, 70, 100);
-                if (selectedCard != null && selectedCard.index == index && selectedCard.stackNumber == stackNumber) {
+                if (selectedCard != null && selectedCard.index <= index && selectedCard.stackNumber == stackNumber) {
                     cardComp.highlight();
                 }
                 this.add(cardComp);

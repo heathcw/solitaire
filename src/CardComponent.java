@@ -21,7 +21,6 @@ public class CardComponent extends JComponent {
                 if (cardComponent == null || !cardComponent.faceDown) {
                     board.handleCardClick(CardComponent.this);
                 } else {
-                    System.out.println("Card clicked: facedown");
                     board.handleCardClickFaceDown(CardComponent.this);
                 }
             }
@@ -41,13 +40,14 @@ public class CardComponent extends JComponent {
             drawEmptyCard(g);
         } else if (!cardComponent.faceDown) {
             drawCardFront(g, 0, 0, cardComponent.cardSuit, cardComponent.cardValue);
-            if (highlighted) { setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2)); }
+            //if (highlighted) { setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2)); }
         } else {
             drawCardBack(g); // If you support face-down cards
         }
     }
 
     public void drawCardFront(Graphics g, int x, int y, suit cardSuit, int value) {
+        Graphics2D g2 = (Graphics2D) g;
         Font newFont = new Font("SansSerif", Font.PLAIN, 20);
         String valueString = switch (value) {
             case 1 -> "A";
@@ -69,15 +69,23 @@ public class CardComponent extends JComponent {
             case HEARTS, DIAMONDS -> Color.RED;
         };
 
-        g.setColor(Color.WHITE);
-        g.fillRoundRect(x, y, 70, 100, 10, 10);
-        g.setColor(Color.BLACK);
-        g.drawRoundRect(x, y, 70, 100, 10, 10);
-        g.setColor(cardColor);
-        g.drawString(valueString + suitString, x + 5, y+ 15);
-        g.drawString(valueString + suitString, x + 47, y + 95);
-        g.setFont(newFont);
-        g.drawString(suitString, x + 30, y + 55);
+        g2.setColor(Color.WHITE);
+        g2.fillRoundRect(x, y, 70, 100, 10, 10);
+        if (highlighted) {
+            g2.setColor(Color.yellow);
+            g2.setStroke(new BasicStroke(3));
+            g2.drawRoundRect(x, y, 70, 100, 10, 10);
+        }
+        else {
+            g2.setColor(Color.BLACK);
+            g2.drawRoundRect(x, y, 70, 100, 10, 10);
+        }
+        g2.setStroke(new BasicStroke(1));
+        g2.setColor(cardColor);
+        g2.drawString(valueString + suitString, x + 5, y+ 15);
+        g2.drawString(valueString + suitString, x + 47, y + 95);
+        g2.setFont(newFont);
+        g2.drawString(suitString, x + 30, y + 55);
     }
 
     private void drawCardBack(Graphics g) {
