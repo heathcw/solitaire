@@ -7,6 +7,7 @@ public class GameBoard extends JPanel {
 
     private final game solitaire;
     private CardComponent selectedCard = null;
+    public boolean gameActive = true;
 
     public GameBoard() {
         solitaire = new game();
@@ -101,15 +102,20 @@ public class GameBoard extends JPanel {
             }
             stackNumber +=1;
         }
-
+        if (solitaire.win()) {
+            gameActive = false;
+            CardComponent winComp = new CardComponent(new card(100, null), 0, 0, this);
+            winComp.setBounds(250, 150, 400, 400);
+            this.add(winComp);
+        }
     }
 
     public void handleCardClick(CardComponent clickedCard) {
         if (selectedCard != null) {
             selectedCard.setBorder(null); // Deselect previous
-            if (selectedCard.index == -2 && clickedCard.index != -2) {
+            if (selectedCard.index == -2 && clickedCard.index != -2 && clickedCard.index != -1) {
                 solitaire.moveCardDrawPile(clickedCard.stackNumber);
-            } else if (clickedCard.index != -2) {
+            } else if (clickedCard.index != -2 && clickedCard.index != -1) {
                 solitaire.moveCardStack(selectedCard.stackNumber, selectedCard.index, clickedCard.stackNumber);
             }
             selectedCard = null;

@@ -323,4 +323,11 @@ public class game {
         drawPile.push(cardToMove);
         return false;
     }
+
+    public boolean win() {
+        for (ArrayList<card> stack: playingField) {
+            if (!stack.isEmpty()) { return false; }
+        }
+        return drawPile.isEmpty();
+    }
 }

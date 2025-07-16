@@ -18,6 +18,7 @@ public class CardComponent extends JComponent {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (!board.gameActive) return;
                 if (cardComponent == null || !cardComponent.faceDown) {
                     board.handleCardClick(CardComponent.this);
                 } else {
@@ -38,11 +39,12 @@ public class CardComponent extends JComponent {
 
         if (cardComponent == null) {
             drawEmptyCard(g);
+        } else if (cardComponent.cardValue == 100) {
+            drawVictory(g);
         } else if (!cardComponent.faceDown) {
             drawCardFront(g, 0, 0, cardComponent.cardSuit, cardComponent.cardValue);
-            //if (highlighted) { setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2)); }
         } else {
-            drawCardBack(g); // If you support face-down cards
+            drawCardBack(g);
         }
     }
 
@@ -117,5 +119,14 @@ public class CardComponent extends JComponent {
         int height = 100;
         g.setColor(Color.BLACK);
         g.drawRoundRect(0, 0, width, height, 10, 10);
+    }
+
+    private void drawVictory(Graphics g) {
+        int width = 400;
+        int height = 400;
+        g.setColor(Color.BLUE);
+        Font newFont = new Font("SansSerif", Font.PLAIN, 50);
+        g.setFont(newFont);
+        g.drawString("YOU WIN!", 50, 200);
     }
 }
