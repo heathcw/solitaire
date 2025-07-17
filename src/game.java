@@ -350,6 +350,6 @@ public class game {
         for (ArrayList<card> stack: playingField) {
             if (!stack.isEmpty()) { return false; }
         }
-        return drawPile.isEmpty();
+        return (drawPile.isEmpty() && gameDeck.deck.isEmpty());
     }
 }
