@@ -50,7 +50,8 @@ public class GameBoard extends JPanel {
             if (stackToAdd.isEmpty()) {
                 suitTop = new CardComponent(null, -3, -3, this);
             } else {
-                suitTop = new CardComponent(stackToAdd.get(stackToAdd.size() - 1), -3, -3, this);
+                suitTop = new CardComponent(
+                        stackToAdd.get(stackToAdd.size() - 1), -3, -3, this);
             }
             suitTop.setBounds(x, y, 70, 100);
             this.add(suitTop);
@@ -59,7 +60,8 @@ public class GameBoard extends JPanel {
         //drawPile
         CardComponent deckTop;
         if (!gameDeck.deck.isEmpty()) {
-            deckTop = new CardComponent(gameDeck.deck.get(gameDeck.deck.size() - 1), -1, -1, this);
+            deckTop = new CardComponent(
+                    gameDeck.deck.get(gameDeck.deck.size() - 1), -1, -1, this);
         } else {
             deckTop = new CardComponent(null, -1, -1, this);
         }
@@ -104,7 +106,8 @@ public class GameBoard extends JPanel {
         }
         if (solitaire.win()) {
             gameActive = false;
-            CardComponent winComp = new CardComponent(new card(100, null), 0, 0, this);
+            CardComponent winComp = new CardComponent(
+                    new card(100, null), 0, 0, this);
             winComp.setBounds(250, 150, 400, 400);
             this.add(winComp);
         }

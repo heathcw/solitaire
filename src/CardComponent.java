@@ -18,7 +18,7 @@ public class CardComponent extends JComponent {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!board.gameActive) return;
+                if (!board.gameActive || index == -3) { return; }
                 if (cardComponent == null || !cardComponent.faceDown) {
                     board.handleCardClick(CardComponent.this);
                 } else {
