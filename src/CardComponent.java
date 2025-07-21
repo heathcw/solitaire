@@ -18,6 +18,7 @@ public class CardComponent extends JComponent {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (cardComponent != null && cardComponent.cardValue == 200) { board.handlePlayAgain(); }
                 if (!board.gameActive || index == -3) { return; }
                 if (cardComponent == null || !cardComponent.faceDown) {
                     board.handleCardClick(CardComponent.this);
@@ -41,6 +42,8 @@ public class CardComponent extends JComponent {
             drawEmptyCard(g);
         } else if (cardComponent.cardValue == 100) {
             drawVictory(g);
+        } else if (cardComponent.cardValue == 200) {
+            drawPlayAgain(g);
         } else if (!cardComponent.faceDown) {
             drawCardFront(g, 0, 0, cardComponent.cardSuit, cardComponent.cardValue);
         } else {
@@ -122,11 +125,20 @@ public class CardComponent extends JComponent {
     }
 
     private void drawVictory(Graphics g) {
-        int width = 400;
-        int height = 400;
         g.setColor(Color.BLUE);
         Font newFont = new Font("SansSerif", Font.PLAIN, 50);
         g.setFont(newFont);
         g.drawString("YOU WIN!", 50, 200);
+    }
+
+    private void drawPlayAgain(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.drawRoundRect(0, 0, 150, 30, 10, 10);
+        g.setColor(Color.BLUE);
+        g.fillRoundRect(0, 0, 150, 30, 10, 10);
+        g.setColor(Color.WHITE);
+        Font newFont = new Font("SansSerif", Font.PLAIN, 20);
+        g.setFont(newFont);
+        g.drawString("PLAY AGAIN", 15, 22);
     }
 }

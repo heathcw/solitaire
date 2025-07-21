@@ -3,19 +3,29 @@ import java.util.List;
 import java.util.Stack;
 
 public class game {
-    public deck gameDeck = new deck();
-    public Stack<card> heartStack = new Stack<>();
-    public Stack<card> clubStack = new Stack<>();
-    public Stack<card> diamondStack = new Stack<>();
-    public Stack<card> spadeStack = new Stack<>();
-    public ArrayList<ArrayList<card>> playingField = new ArrayList<>();
-    public Stack<card> drawPile = new Stack<>();
+    public deck gameDeck;
+    public Stack<card> heartStack;
+    public Stack<card> clubStack;
+    public Stack<card> diamondStack;
+    public Stack<card> spadeStack;
+    public ArrayList<ArrayList<card>> playingField;
+    public Stack<card> drawPile;
+    public int score = 0;
+    public boolean win;
 
     public game() {
         deal();
     }
 
     public void deal() {
+        gameDeck = new deck();
+        heartStack = new Stack<>();
+        clubStack = new Stack<>();
+        diamondStack = new Stack<>();
+        spadeStack = new Stack<>();
+        playingField = new ArrayList<>();
+        drawPile = new Stack<>();
+        win = false;
         ArrayList<card> stack1 = new ArrayList<>();
         ArrayList<card> stack2 = new ArrayList<>();
         ArrayList<card> stack3 = new ArrayList<>();
@@ -80,6 +90,8 @@ public class game {
                 backToDeck.flip();
                 gameDeck.addCard(backToDeck);
             }
+            score -= 100;
+            if (score < 0) { score = 0; }
         } else {
             drawn.flip();
             drawPile.push(drawn);
@@ -91,6 +103,7 @@ public class game {
         if (playingField.get(destination).isEmpty()) {
             if (cardToMove.cardValue == 13) {
                 playingField.get(destination).add(cardToMove);
+                score += 5;
                 return true;
             }
             return false;
@@ -102,6 +115,7 @@ public class game {
                     if (cardToCompare.cardSuit == suit.HEARTS || cardToCompare.cardSuit == suit.DIAMONDS) {
                         playingField.get(destination).add(cardToCompare);
                         playingField.get(destination).add(cardToMove);
+                        score += 5;
                         return true;
                     }
                 }
@@ -111,6 +125,7 @@ public class game {
                     if (cardToCompare.cardSuit == suit.CLUBS || cardToCompare.cardSuit == suit.SPADES) {
                         playingField.get(destination).add(cardToCompare);
                         playingField.get(destination).add(cardToMove);
+                        score += 5;
                         return true;
                     }
                 }
@@ -132,7 +147,9 @@ public class game {
                 stackToMove.clear();
                 if (originStack.get(originStack.size() - 1).faceDown) {
                     originStack.get(originStack.size() - 1).flip();
+                    score += 5;
                 }
+                score += 3;
                 return true;
             }
             return false;
@@ -148,7 +165,9 @@ public class game {
                         stackToMove.clear();
                         if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                             originStack.get(originStack.size() - 1).flip();
+                            score += 5;
                         }
+                        score += 3;
                         return true;
                     }
                 }
@@ -161,7 +180,9 @@ public class game {
                         stackToMove.clear();
                         if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                             originStack.get(originStack.size() - 1).flip();
+                            score += 5;
                         }
+                        score += 3;
                         return true;
                     }
                 }
@@ -189,7 +210,9 @@ public class game {
                     clubStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 }
                 cardToCompare = clubStack.pop();
@@ -198,7 +221,9 @@ public class game {
                     clubStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 } else {
                     clubStack.push(cardToCompare);
@@ -210,7 +235,9 @@ public class game {
                     heartStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 }
                 cardToCompare = heartStack.pop();
@@ -219,7 +246,9 @@ public class game {
                     heartStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 } else {
                     heartStack.push(cardToCompare);
@@ -231,7 +260,9 @@ public class game {
                     spadeStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 }
                 cardToCompare = spadeStack.pop();
@@ -240,7 +271,9 @@ public class game {
                     spadeStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 } else {
                     spadeStack.push(cardToCompare);
@@ -252,7 +285,9 @@ public class game {
                     diamondStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 }
                 cardToCompare = diamondStack.pop();
@@ -261,7 +296,9 @@ public class game {
                     diamondStack.push(cardToMove);
                     if (!originStack.isEmpty() && originStack.get(originStack.size() - 1).faceDown) {
                         originStack.get(originStack.size() - 1).flip();
+                        score += 5;
                     }
+                    score += 10;
                     return true;
                 } else {
                     diamondStack.push(cardToCompare);
@@ -282,12 +319,14 @@ public class game {
                 if (clubStack.isEmpty()) {
                     if (cardToMove.cardValue != 1) { break; }
                     clubStack.push(cardToMove);
+                    score += 10;
                     return true;
                 }
                 cardToCompare = clubStack.pop();
                 if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.CLUBS) {
                     clubStack.push(cardToCompare);
                     clubStack.push(cardToMove);
+                    score += 10;
                     return true;
                 } else {
                     clubStack.push(cardToCompare);
@@ -297,12 +336,14 @@ public class game {
                 if (heartStack.isEmpty()) {
                     if (cardToMove.cardValue != 1) { break; }
                     heartStack.push(cardToMove);
+                    score += 10;
                     return true;
                 }
                 cardToCompare = heartStack.pop();
                 if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.HEARTS) {
                     heartStack.push(cardToCompare);
                     heartStack.push(cardToMove);
+                    score += 10;
                     return true;
                 } else {
                     heartStack.push(cardToCompare);
@@ -312,12 +353,14 @@ public class game {
                 if (spadeStack.isEmpty()) {
                     if (cardToMove.cardValue != 1) { break; }
                     spadeStack.push(cardToMove);
+                    score += 10;
                     return true;
                 }
                 cardToCompare = spadeStack.pop();
                 if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.SPADES) {
                     spadeStack.push(cardToCompare);
                     spadeStack.push(cardToMove);
+                    score += 10;
                     return true;
                 } else {
                     spadeStack.push(cardToCompare);
@@ -327,12 +370,14 @@ public class game {
                 if (diamondStack.isEmpty()) {
                     if (cardToMove.cardValue != 1) { break; }
                     diamondStack.push(cardToMove);
+                    score += 10;
                     return true;
                 }
                 cardToCompare = diamondStack.pop();
                 if ((cardToCompare.cardValue == cardToMove.cardValue - 1) && cardToMove.cardSuit == suit.DIAMONDS) {
                     diamondStack.push(cardToCompare);
                     diamondStack.push(cardToMove);
+                    score += 10;
                     return true;
                 } else {
                     diamondStack.push(cardToCompare);
@@ -346,10 +391,13 @@ public class game {
         return false;
     }
 
-    public boolean win() {
+    public void win() {
         for (ArrayList<card> stack: playingField) {
-            if (!stack.isEmpty()) { return false; }
+            if (!stack.isEmpty()) { return; }
         }
-        return (drawPile.isEmpty() && gameDeck.deck.isEmpty());
+        if (drawPile.isEmpty() && gameDeck.deck.isEmpty()) {
+            win = true;
+            score += 250;
+        }
     }
 }

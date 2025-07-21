@@ -21,6 +21,9 @@ public class GameBoard extends JPanel {
         // Background
         g.setColor(new Color(0, 100, 0)); // dark green
         g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.blue);
+        g.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        g.drawString("SCORE: " + solitaire.score, 20, 20);
 
         drawPlayingField();
     }
@@ -104,12 +107,18 @@ public class GameBoard extends JPanel {
             }
             stackNumber +=1;
         }
-        if (solitaire.win()) {
+        if (solitaire.win) {
             gameActive = false;
             CardComponent winComp = new CardComponent(
                     new card(100, null), 0, 0, this);
             winComp.setBounds(250, 150, 400, 400);
             this.add(winComp);
+
+            CardComponent playComp = new CardComponent(
+                    new card(200, null), 0, 0, this);
+            playComp.setBounds(350, 400, 150, 30);
+            this.add(playComp);
+            this.setComponentZOrder(playComp, 0);
         }
     }
 
@@ -129,6 +138,7 @@ public class GameBoard extends JPanel {
                 selectedCard = clickedCard;
             }
         }
+        solitaire.win();
         drawPlayingField();
         this.revalidate();
         this.repaint();
@@ -142,5 +152,13 @@ public class GameBoard extends JPanel {
             this.revalidate();
             this.repaint();
         }
+    }
+
+    public void handlePlayAgain() {
+        gameActive = true;
+        solitaire.deal();
+        drawPlayingField();
+        this.revalidate();
+        this.repaint();
     }
 }
